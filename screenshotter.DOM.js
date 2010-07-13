@@ -55,13 +55,4 @@
         case "screenshotReturn": screenshotReturn(e.shared); break;
       }
   });
-  
-  
-  
-  function makeTimestamp() {
-    var d = new Date();
-    
-    
-    return timestamp;
-  }
 })();
