@@ -3,7 +3,7 @@ var Screenshotter = {
   imageDataURL: [],
   
   shared: {
-    imageDataURL: [],
+    imageDataURLPartial: [],
     imageDirtyCutAt: 0,
     
     originalScrollTop: 0,
@@ -52,42 +52,8 @@ var Screenshotter = {
   // 2
   screenshotVisibleArea: function(shared) {
     var self = this;
-    //chrome.tabs.captureVisibleTab(null, { format: "png" /* png, jpeg */, quality: 80 }, function(dataUrl) { self.imageDataURLPartial.push(dataUrl); });
-    
-    /*if (this.imageDataURLPartial.length == 0) {
-      //this.imageDataURLPartial = "data:image/jpg;base64,"; //TODO: THIS DOESN'T CHAIN
-      chrome.tabs.captureVisibleTab(null, function(dataUrl) { self.imageDataURLPartial.push(dataUrl); });
-    }*/
-    
-    
-    //TODO: Since I'm going to use canvas, why not use "canvas.drawWindow"?
-    chrome.tabs.captureVisibleTab(null, { format: "png" /* png, jpeg */, quality: 80 }, function(dataUrl) {
-      //TODO: to improve speed, just store and stitch later
-      canvas = window.document.createElement('canvas');
-      canvas.width = 1;
-      canvas.height = 1;
-      if (self.imageDataURLPartial.length == 0) self.imageDataURLPartial = canvas.toDataURL("image/png");
-      
-      imgExisting = new Image();
-      imgNew = new Image();
-      
-      imgExisting.onload = function() {
-        imgNew.onload = function() {
-          canvas.width = Math.max(imgExisting.width, imgNew.width);
-          canvas.height = imgExisting.height + imgNew.height;
-          canvas.getContext("2d").drawImage(imgExisting, 0, 0, imgExisting.width, imgExisting.height, 0, 0, imgExisting.width, imgExisting.height);
-          //canvas.getContext("2d").drawImage(imgNew, 0, 0, imgNew.width - 20, imgNew.height, 0, imgExisting.height, imgNew.width - 20, imgNew.height);
-          //canvas.getContext("2d").drawImage(imgExisting, 0, 0);
-          canvas.getContext("2d").drawImage(imgNew, 0, imgExisting.height);
-          
-          self.imageDataURLPartial = canvas.toDataURL("image/png");
-          
-          self.screenshotScroll(shared);
-        }
-        imgNew.src = dataUrl;
-      }
-      imgExisting.src = self.imageDataURLPartial;
-    });
+    chrome.tabs.captureVisibleTab(null, { format: "jpeg" /* png, jpeg */, quality: 80 }, function(dataUrl) { self.imageDataURLPartial.push(dataUrl); });
+    self.screenshotScroll(shared);
   },
   
   // 3
@@ -95,10 +61,12 @@ var Screenshotter = {
   
   // 4
   screenshotEnd: function(shared) {
-    //TODO: use original scroll top to cut?
-    //      shared.imageDirtyCutAt
-    shared.imageDataURL = this.imageDataURLPartial;
-    this.screenshotReturn(shared);
+    var self = this;
+    
+    this.recursiveImageMerge(this.imageDataURLPartial, function(image) {
+      shared.imageDataURL = image;
+      self.screenshotReturn(shared);
+    });
   },
   
   // 5
@@ -113,6 +81,36 @@ var Screenshotter = {
           case "screenshotEnd": self.screenshotEnd(e.shared); break;
         }
     });
+  },
+  
+  recursiveImageMerge: function(imageDataURLs, callback, images, i) {
+    var fx = arguments.callee;
+    i = i || 0;
+    images = images || [];
+    
+    if (i < imageDataURLs.length) {
+      images[i] = new Image();
+      images[i].onload = function() {
+        if (i == imageDataURLs.length - 1) {
+          // ****** We're at the end of the chain, let's have fun with canvas.
+          var canvas = window.document.createElement('canvas');
+          
+          // NOTE: Resizing a canvas is destructive, we can do it just now before stictching
+          canvas.width = images[0].width - 20; //TODO: fix toolbar evaluation
+          canvas.height = imageDataURLs.length * images[0].height; //TODO: fix
+          
+          for (var j = 0; j < images.length; j++) {
+            canvas.getContext("2d").drawImage(images[j], 0, j * images[0].height);
+          }
+          
+          callback(canvas.toDataURL("image/png")); // --> CALLBACK
+        } else {
+          // ****** Down!
+          fx(imageDataURLs, callback, images, ++i);
+        }
+      }
+      images[i].src = imageDataURLs[i]; // Load!
+    }
   }
 }
 
