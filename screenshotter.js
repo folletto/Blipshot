@@ -98,15 +98,17 @@ var Screenshotter = {
           
           // NOTE: Resizing a canvas is destructive, we can do it just now before stictching
           canvas.width = images[0].width - 20; //TODO: fix toolbar evaluation
-          canvas.height = imageDataURLs.length * images[0].height; //TODO: fix
-          //canvas.height = (imageDataURLs.length - 1) * images[0].height + imageDirtyCutAt; //TODO: fix
-          alert(imageDirtyCutAt)
+          //canvas.height = imageDataURLs.length * images[0].height; //TODO: fix
+          canvas.height = (imageDataURLs.length - 1) * images[0].height + imageDirtyCutAt;
           for (var j = 0; j < images.length; j++) {
-            if (j == images.length - 1) {
-              //TODO: last image must be cut when scrolled
-            }
-            //canvas.getContext("2d").drawImage(images[j], 0, 0, images[j].width, images[j].height, 0, j * images[0].height, images[j].width, images[j].height);
-            canvas.getContext("2d").drawImage(images[j], 0, j * images[0].height);
+            var cut = 0;
+            if (j == images.length - 1) cut = images[j].height - imageDirtyCutAt;
+            
+            var height = images[j].height - cut;
+            var width = images[j].width;
+            alert(width + "x" + height);
+            canvas.getContext("2d").drawImage(images[j], 0, cut, width, height, 0, j * images[0].height, width, height);
+            //canvas.getContext("2d").drawImage(images[j], 0, j * images[0].height);
           }
           
           callback(canvas.toDataURL("image/png")); // --> CALLBACK

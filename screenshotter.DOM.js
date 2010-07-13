@@ -21,7 +21,7 @@
     
     if (window.document.body.scrollTop == scrollTopCurrent) {
       // END ||
-      shared.imageDirtyCutAt = scrollTopCurrent % window.document.documentElement.clientHeight / window.document.documentElement.clientHeight;
+      shared.imageDirtyCutAt = scrollTopCurrent % window.document.documentElement.clientHeight;
       window.document.body.scrollTop = shared.originalScrollTop; // <-[] restore user scrollTop
       screenshotEnd(shared);
     } else {
