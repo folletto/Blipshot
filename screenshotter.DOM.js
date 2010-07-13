@@ -36,7 +36,7 @@
   // 5
   function screenshotReturn(shared) {
     var div = window.document.createElement('div');
-    div.innerHTML = '<p style="-webkit-box-shadow: 0px 5px 8px #000000; margin: 20px; border: 1px solid #666666; padding: 1px; background: #ffffff; position: absolute; top: 0; z-index: 666; "><img src="' +  shared.imageDataURL + '" width= "500" /></p>';
+    div.innerHTML = '<p style="-webkit-box-shadow: 0px 5px 10px #000000; margin: 20px; background: #ffffff; position: absolute; top: 0; right: 0; z-index: 666; "><img src="' +  shared.imageDataURL + '" width= "400" /></p>';
     window.document.body.appendChild(div);
   }
   
