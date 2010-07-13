@@ -39,11 +39,11 @@ var Screenshotter = {
     chrome.windows.getCurrent(function(win) {
       chrome.tabs.getSelected(win.id, function(tab) {
         self.shared.tab = tab;
+        
+        // ****** Begin!
+        self.screenshotBegin(self.shared);
       });
     });
-    
-    // ****** Begin!
-    this.screenshotBegin(this.shared);
   },
   
   // 1
