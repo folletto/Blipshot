@@ -52,7 +52,7 @@ var Screenshotter = {
   // 2
   screenshotVisibleArea: function(shared) {
     var self = this;
-    chrome.tabs.captureVisibleTab(null, { format: "jpeg" /* png, jpeg */, quality: 80 }, function(dataUrl) { self.imageDataURLPartial.push(dataUrl); });
+    chrome.tabs.captureVisibleTab(null, { format: "png" /* png, jpeg */, quality: 80 }, function(dataUrl) { self.imageDataURLPartial.push(dataUrl); });
     self.screenshotScroll(shared);
   },
   
@@ -63,7 +63,7 @@ var Screenshotter = {
   screenshotEnd: function(shared) {
     var self = this;
     
-    this.recursiveImageMerge(this.imageDataURLPartial, function(image) {
+    this.recursiveImageMerge(this.imageDataURLPartial, shared.imageDirtyCutAt, function(image) {
       shared.imageDataURL = image;
       self.screenshotReturn(shared);
     });
@@ -83,7 +83,7 @@ var Screenshotter = {
     });
   },
   
-  recursiveImageMerge: function(imageDataURLs, callback, images, i) {
+  recursiveImageMerge: function(imageDataURLs, imageDirtyCutAt, callback, images, i) {
     var fx = arguments.callee;
     i = i || 0;
     images = images || [];
@@ -91,6 +91,7 @@ var Screenshotter = {
     if (i < imageDataURLs.length) {
       images[i] = new Image();
       images[i].onload = function() {
+        imageDataURLs[i] = null; // clear for optimize memory consumption (not sure)
         if (i == imageDataURLs.length - 1) {
           // ****** We're at the end of the chain, let's have fun with canvas.
           var canvas = window.document.createElement('canvas');
@@ -98,15 +99,20 @@ var Screenshotter = {
           // NOTE: Resizing a canvas is destructive, we can do it just now before stictching
           canvas.width = images[0].width - 20; //TODO: fix toolbar evaluation
           canvas.height = imageDataURLs.length * images[0].height; //TODO: fix
-          
+          //canvas.height = (imageDataURLs.length - 1) * images[0].height + imageDirtyCutAt; //TODO: fix
+          alert(imageDirtyCutAt)
           for (var j = 0; j < images.length; j++) {
+            if (j == images.length - 1) {
+              //TODO: last image must be cut when scrolled
+            }
+            //canvas.getContext("2d").drawImage(images[j], 0, 0, images[j].width, images[j].height, 0, j * images[0].height, images[j].width, images[j].height);
             canvas.getContext("2d").drawImage(images[j], 0, j * images[0].height);
           }
           
           callback(canvas.toDataURL("image/png")); // --> CALLBACK
         } else {
           // ****** Down!
-          fx(imageDataURLs, callback, images, ++i);
+          fx(imageDataURLs, imageDirtyCutAt, callback, images, ++i);
         }
       }
       images[i].src = imageDataURLs[i]; // Load!
