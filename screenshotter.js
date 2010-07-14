@@ -98,17 +98,20 @@ var Screenshotter = {
           
           // NOTE: Resizing a canvas is destructive, we can do it just now before stictching
           canvas.width = images[0].width - 20; //TODO: fix toolbar evaluation
-          //canvas.height = imageDataURLs.length * images[0].height; //TODO: fix
-          canvas.height = (imageDataURLs.length - 1) * images[0].height + imageDirtyCutAt;
+          
+          if (images.length > 1) canvas.height = (imageDataURLs.length - 1) * images[0].height + imageDirtyCutAt;
+          else canvas.height = images[0].height;
+          
+          // ****** Stitch
           for (var j = 0; j < images.length; j++) {
             var cut = 0;
-            if (j == images.length - 1) cut = images[j].height - imageDirtyCutAt;
+            if (images.length > 1 && j == images.length - 1) cut = images[j].height - imageDirtyCutAt;
             
             var height = images[j].height - cut;
             var width = images[j].width;
-            alert(width + "x" + height);
+            //alert("[i:" + i + ", j:" + j + "]" + width + "x" + height + "(cut:" + cut + ") --- images:" + imageDataURLs.length);
+            
             canvas.getContext("2d").drawImage(images[j], 0, cut, width, height, 0, j * images[0].height, width, height);
-            //canvas.getContext("2d").drawImage(images[j], 0, j * images[0].height);
           }
           
           callback(canvas.toDataURL("image/png")); // --> CALLBACK
