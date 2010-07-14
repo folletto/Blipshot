@@ -3,7 +3,7 @@
   "version": "0.1",
   "description": "This app will make automated screenshots while you are browsing in its window.",
   "browser_action": {
-    "default_icon": "icon.png",
+    "default_icon": "icon/toolbar.png",
     "popup": "popup.html"
   },
   "content_scripts": [ 
