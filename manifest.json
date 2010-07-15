@@ -1,5 +1,5 @@
 {
-  "name": "Autoscreenshotter",
+  "name": "Blipshot",
   "version": "0.1",
   "description": "This app will make automated screenshots while you are browsing in its window.",
   "browser_action": {
