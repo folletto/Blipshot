@@ -5,11 +5,10 @@ by Davide 'Folletto' Casali
 
 ## REUSABLE COMPONENTS
 
-The screenshotter[.DOM].js library is designed to be reused, please do if you want to make full screen screenshots, until Chrome will implement full page screenshot in its core.
+The screenshotter[.DOM].js library is designed to be as reusable as possible, please do it if you want to make full screen screenshots, until Chrome will implement full page screenshot in its core.
 
 ## TODO
 
-* Fix vertical scrollbar evaluation (now it assumes that the page has the scrollbar)
 * Fix horizontal scrollbar evaluation (now it assumes that the page hasn't the scrollbar)
 
 ## MAY DO
