@@ -44,7 +44,7 @@
     
     var div = window.document.createElement('div');
     div.id = "blipshot";
-    div.innerHTML = '<div id="dim" style="position: absolute !important; height: ' + window.document.body.offsetHeight + 'px !important; width: 100% !important; top: 0px !important; left: 0px !important; background: #000000 !important; opacity: 0.66 !important; z-index: 666666 !important;"> </div>';
+    div.innerHTML = '<div id="dim" style="position: absolute !important; height: ' + window.document.body.scrollHeight + 'px !important; width: 100% !important; top: 0px !important; left: 0px !important; background: #000000 !important; opacity: 0.66 !important; z-index: 666666 !important;"> </div>';
     div.innerHTML += '<p style="-webkit-box-shadow: 0px 5px 10px #000000; margin: 20px; background: #ffffff; position: absolute; top: 0; right: 0; z-index: 666667 !important;"><img alt="' + filename + '" src="' +  shared.imageDataURL + '" width= "400" /></p>';
     window.document.body.appendChild(div);
     
