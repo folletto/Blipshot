@@ -1,9 +1,0 @@
-Blipshot
-Google Chrome Extension
-by Davide 'Folletto' Casali
-
-(not yet released, development version, now full copyright, will be BSD in the end)
-
-REUSABLE COMPONENTS
-The screenshotter[.DOM].js library is designed to be reused, please do if you want to make full screen screenshots, until Chrome will implement full page screenshot in its core.
-
