@@ -1,7 +1,7 @@
 {
   "name": "Blipshot",
   "version": "0.1",
-  "description": "This app will make automated screenshots while you are browsing in its window.",
+  "description": "One-click screenshot tool. The screenshot is then draggable to your desktop.",
   "browser_action": {
     "default_icon": "icon/toolbar.png"
     //"popup": "popup.html"
