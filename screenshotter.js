@@ -5,6 +5,7 @@ var Screenshotter = {
   shared: {
     imageDataURLPartial: [],
     imageDirtyCutAt: 0,
+    imageDataURL: 0,
     
     originalScrollTop: 0,
     
@@ -64,6 +65,7 @@ var Screenshotter = {
   // 4
   screenshotEnd: function(shared) {
     var self = this;
+    UI.status('azure', "make");
     
     this.recursiveImageMerge(this.imageDataURLPartial, shared.imageDirtyCutAt, function(image) {
       shared.imageDataURL = image;
@@ -72,7 +74,10 @@ var Screenshotter = {
   },
   
   // 5
-  screenshotReturn: function(shared) { chrome.tabs.sendRequest(this.shared.tab.id, { action: 'screenshotReturn', shared: shared }); },
+  screenshotReturn: function(shared) {
+    UI.status('green', "done", 6000);
+    chrome.tabs.sendRequest(this.shared.tab.id, { action: 'screenshotReturn', shared: shared });
+  },
   
   eventManagerInit: function() {
     var self = this;

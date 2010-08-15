@@ -1,0 +1,58 @@
+body {
+  font-family: Myriad, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  
+  overflow-x: hidden;
+}
+
+/****************************************************************************************************
+ * Button
+ */
+.ui.right {
+  text-align: right;
+}
+
+.ui a {
+  display: inline-block;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#dddddd));
+  border-radius: 5px;
+  
+  border: 1px solid #aaaaaa;
+  
+  color: #666666;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  
+  margin: 2px 0;
+  padding: 3px 6px;
+}
+.ui a:hover {
+  border: 1px solid #4bb9fa;
+  color: #4bb9fa;
+  -webkit-box-shadow: 0px 0px 2px #4bb9fa;
+}
+.ui a:active {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#dddddd), to(#ffffff));
+}
+
+/****************************************************************************************************
+ * Page
+ */
+#dim {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  background: #000000;
+  opacity: 0.33;
+}
+
+/****************************************************************************************************
+ * Messages
+ */
+.message.working {
+  background: transparent url(loader.gif) top left no-repeat;
+  padding: 0 0 0 20px;
+}
