@@ -75,7 +75,7 @@ var Screenshotter = {
   
   // 5
   screenshotReturn: function(shared) {
-    UI.status('green', "done", 6000);
+    UI.status('green', "done", 3000);
     chrome.tabs.sendRequest(this.shared.tab.id, { action: 'screenshotReturn', shared: shared });
   },
   
