@@ -12,7 +12,8 @@ var Screenshotter = {
     tab: {
       id: 0,
       url: "",
-      title: ""
+      title: "",
+      hasVscrollbar: false
     }
   },
   
@@ -67,7 +68,7 @@ var Screenshotter = {
     var self = this;
     UI.status('azure', "make");
     
-    this.recursiveImageMerge(this.imageDataURLPartial, shared.imageDirtyCutAt, function(image) {
+    this.recursiveImageMerge(this.imageDataURLPartial, shared.imageDirtyCutAt, shared.tab.hasVscrollbar, function(image) {
       shared.imageDataURL = image;
       self.screenshotReturn(shared);
     });
@@ -90,7 +91,7 @@ var Screenshotter = {
     });
   },
   
-  recursiveImageMerge: function(imageDataURLs, imageDirtyCutAt, callback, images, i) {
+  recursiveImageMerge: function(imageDataURLs, imageDirtyCutAt, hasVscrollbar, callback, images, i) {
     var fx = arguments.callee;
     i = i || 0;
     images = images || [];
@@ -104,7 +105,7 @@ var Screenshotter = {
           var canvas = window.document.createElement('canvas');
           
           // NOTE: Resizing a canvas is destructive, we can do it just now before stictching
-          canvas.width = images[0].width - 20; //TODO: fix toolbar evaluation
+          canvas.width = images[0].width - (hasVscrollbar ? 15 : 0); // <-- manage V scrollbar
           
           if (images.length > 1) canvas.height = (imageDataURLs.length - 1) * images[0].height + imageDirtyCutAt;
           else canvas.height = images[0].height;
@@ -124,7 +125,7 @@ var Screenshotter = {
           callback(canvas.toDataURL("image/png")); // --> CALLBACK
         } else {
           // ****** Down!
-          fx(imageDataURLs, imageDirtyCutAt, callback, images, ++i);
+          fx(imageDataURLs, imageDirtyCutAt, hasVscrollbar, callback, images, ++i);
         }
       }
       images[i].src = imageDataURLs[i]; // Load!
