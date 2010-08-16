@@ -54,7 +54,7 @@ var Screenshotter = {
   // 2
   screenshotVisibleArea: function(shared) {
     var self = this;
-    chrome.tabs.captureVisibleTab(null, { format: "png" /* png, jpeg */, quality: 80 }, function(dataUrl) {
+    chrome.tabs.captureVisibleTab(null, { format: "jpeg" /* png, jpeg */, quality: 80 }, function(dataUrl) {
       self.imageDataURLPartial.push(dataUrl);
       self.screenshotScroll(shared);
     });
