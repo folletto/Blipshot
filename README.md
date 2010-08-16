@@ -1,7 +1,6 @@
 # Blipshot -Google Chrome Extension
 by Davide 'Folletto' Casali
-
-(not yet released, development version, now full copyright, will be BSD in the end)
+Released under BSD license.
 
 ## REUSABLE COMPONENTS
 
