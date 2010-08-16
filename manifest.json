@@ -1,10 +1,9 @@
 {
   "name": "Blipshot",
-  "version": "1.0",
-  "description": "One-click screenshot tool. The screenshot is then draggable to your desktop.",
+  "version": "1.0.1",
+  "description": "Real fast and simple one-click full-page screenshot tool.",
   "browser_action": {
     "default_icon": "icon/toolbar.png"
-    //"popup": "popup.html"
   },
   "icons": {
     "16": "icon/icon16.png",
