@@ -78,6 +78,13 @@ var Screenshotter = {
       chrome.tabs.getSelected(win.id, function(tab) {
         self.shared.tab = tab;
         
+        // ****** Check if everything's is in order.
+        var parts = tab.url.match(/https?:\/\/chrome.google.com\/?.*/);
+        if (parts !== null) {
+          alert("\n\n\nI'm sorry.\n\nDue to security restrictions \non the Google Chrome Store, \nBlipshot can't run here.\n\nTry on any other page. ;)\n\n\n");
+          return false;
+        }
+        
         // ****** Begin!
         self.screenshotBegin(self.shared);
       });

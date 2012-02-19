@@ -48,7 +48,8 @@ CHANGELOG
 ---------
 
 * **1.0.3** (19/02/2012)
-  * Fixed: added workaround to screenshot big pages (thanks to @ble).
+  * Fixed: added workaround to screenshot big pages (thanks to @ble). It's a workaround for Chrome Bug #69227.
+  * Added info message when you try to screenshot a Chrome Store page (it's not allowed).
 
 * **1.0.2** (16/08/2010)
   * First public release.
