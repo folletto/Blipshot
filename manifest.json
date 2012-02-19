@@ -1,7 +1,7 @@
 {
-  "name": "Blipshot",
-  "version": "1.0.2",
-  "description": "Real fast and simple one-click full-page screenshot tool.",
+  "name": "Blipshot — one click screenshots",
+  "version": "1.0.3",
+  "description": "Real fast and simple one-click full-page screenshots with drag and drop.",
   "browser_action": {
     "default_icon": "icon/toolbar.png"
   },

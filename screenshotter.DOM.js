@@ -1,25 +1,41 @@
+/*
+ *  Blipshot
+ *  Screenshotter.DOM.js
+ *  Half of the screenshotter algorithm. See Screenshotter.js for the other half.
+ *
+ *  ==========================================================================================
+ *  
+ *  Copyright (c) 2010-2012, Davide Casali.
+ *  All rights reserved.
+ *  
+ *  Redistribution and use in source and binary forms, with or without modification, are 
+ *  permitted provided that the following conditions are met:
+ *  
+ *  Redistributions of source code must retain the above copyright notice, this list of 
+ *  conditions and the following disclaimer.
+ *  Redistributions in binary form must reproduce the above copyright notice, this list of 
+ *  conditions and the following disclaimer in the documentation and/or other materials 
+ *  provided with the distribution.
+ *  Neither the name of the Baker Framework nor the names of its contributors may be used to 
+ *  endorse or promote products derived from this software without specific prior written 
+ *  permission.
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY 
+ *  EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
+ *  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT 
+ *  SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, 
+ *  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, 
+ *  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+ *  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
+ *  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ */
+
 (function() {
-  function dataToBlobURL(dataURL) {
-    var parts = dataURL.match(/data:([^;]*)(;base64)?,([0-9A-Za-z+/]+)/);
-
-    //assume base64 encoding
-    var binStr = atob(parts[3]);
-
-    //convert to binary in ArrayBuffer
-    var buf = new ArrayBuffer(binStr.length);
-    var view = new Uint8Array(buf);
-    for(var i = 0; i < view.length; i++)
-      view[i] = binStr.charCodeAt(i);
-
-
-    var builder = new WebKitBlobBuilder();
-    builder.append(buf);
-
-    //create blob with mime type, create URL for it
-    var URL = webkitURL.createObjectURL(builder.getBlob(parts[1]))
-    return URL;
-  }
+  
   var shared = {};
+  
+  // ****************************************************************************************** SCREENSHOT SEQUENCE
   
   // 1
   function screenshotBegin(shared) {
@@ -75,13 +91,47 @@
     window.document.getElementById('dim').addEventListener("click", removeDiv);
   }
   
-  // ****** eventManagerInit
-  var self = this;
-  chrome.extension.onRequest.addListener(function(e) {
-      switch (e.action) {
-        case "screenshotBegin": screenshotBegin(e.shared); break;
-        case "screenshotScroll": screenshotScroll(e.shared); break;
-        case "screenshotReturn": screenshotReturn(e.shared); break;
-      }
-  });
+  // ****************************************************************************************** EVENT MANAGER / HALF
+  function eventManagerInit() {
+    /****************************************************************************************************
+     * This function prepares the internal plugin callbacks to bounce between the plugin and DOM side.
+     * It's initialized right after declaration.
+     */
+    var self = this;
+    chrome.extension.onRequest.addListener(function(e) {
+        switch (e.action) {
+          case "screenshotBegin": screenshotBegin(e.shared); break;
+          case "screenshotScroll": screenshotScroll(e.shared); break;
+          case "screenshotReturn": screenshotReturn(e.shared); break;
+        }
+    });
+  }
+  eventManagerInit(); // Init
+  
+  // ****************************************************************************************** SUPPORT
+  function dataToBlobURL(dataURL) {
+    /****************************************************************************************************
+     * Converts a data:// URL (i.e. `canvas.toDataURL("image/png")`) to a blob:// URL.
+     * This allows a shorter URL and a simple management of big data objects.
+     * 
+     * Contributor: Ben Ellis <https://github.com/ble>
+     */
+    var parts = dataURL.match(/data:([^;]*)(;base64)?,([0-9A-Za-z+/]+)/);
+    
+    // Assume base64 encoding
+    var binStr = atob(parts[3]);
+    
+    // Convert to binary in ArrayBuffer
+    var buf = new ArrayBuffer(binStr.length);
+    var view = new Uint8Array(buf);
+    for(var i = 0; i < view.length; i++)
+      view[i] = binStr.charCodeAt(i);
+    
+    var builder = new WebKitBlobBuilder();
+    builder.append(buf);
+    
+    // Create blob with mime type, create URL for it
+    var URL = webkitURL.createObjectURL(builder.getBlob(parts[1]))
+    return URL;
+  }
 })();
