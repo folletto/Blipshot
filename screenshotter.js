@@ -175,7 +175,7 @@ var Screenshotter = {
             canvas.getContext("2d").drawImage(images[j], 0, cut, width, height, 0, j * images[0].height, width, height);
           }
           
-          callback(canvas.toDataURL("image/png")); // --> CALLBACK
+          callback(canvas.toDataURL("image/png")); // --> CALLBACK (note that the file type is used also in the drag function)
         } else {
           // ****** Down!
           fx(imageDataURLs, imageDirtyCutAt, hasVscrollbar, callback, images, ++i);
