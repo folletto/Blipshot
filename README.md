@@ -19,7 +19,8 @@ REUSABLE COMPONENTS
 -------------------
 
 Screenshotting a full page in Chrome is a little difficult since there's no internal function to do that. There are various workarounds and Blipshot contains an implementation of one of these.
-The screenshotter[.DOM].js library is designed to be as reusable as possible, please do it if you want to make full screen screenshots, until Chrome will implement full page screenshot in its core.
+The screenshotter[.DOM].js library (2 files) is designed to be as reusable as possible, please do it if you want to make full screen screenshots, until Chrome will implement full page screenshot in its core ([Bug #45209](http://code.google.com/p/chromium/issues/detail?id=45209)).
+
 
 KNOWN LIMITATIONS
 -----------------
@@ -46,6 +47,9 @@ MAY DO
 
 CHANGELOG
 ---------
+
+* **1.0.4** (20/02/2012)
+  * Fixed: re-introduced page names and timestamp on file names.
 
 * **1.0.3** (19/02/2012)
   * Fixed: added workaround to screenshot big pages (thanks to @ble). It's a workaround for Chrome Bug #69227.

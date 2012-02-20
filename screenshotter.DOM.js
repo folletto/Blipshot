@@ -74,8 +74,8 @@
     function pad2(str) { if ((str + "").length == 1) return "0" + str; return "" + str; }
     
     var d = new Date();
-    var timestamp = '' + d.getFullYear() + '' + pad2(d.getMonth() + 1) + '' + pad2(d.getDay()) + '-' + pad2(d.getHours()) + '' + pad2(d.getMinutes()) + '';
-    var filename = "pageshot of '" + shared.tab.title.replace(/"/, '\'') + "' @ " + timestamp;
+    var timestamp = '' + d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDay()) + '-' + pad2(d.getHours()) + '' + pad2(d.getMinutes()) + '';
+    var filename = "pageshot of '" + normalizeFileName(shared.tab.title) + "' @ " + timestamp;
     var blobURL = dataToBlobURL(shared.imageDataURL);
     
     // ****** Add DOM Elements to Page
@@ -94,7 +94,11 @@
       // Cleanup
       window.webkitURL.revokeObjectURL(blobURL);
     }
+    function actionDrag(e) {
+      e.dataTransfer.setData("DownloadURL", "image/png:" + filename + ".png:" + blobURL);
+    }
     window.document.getElementById('blipshot-dim').addEventListener("click", actionRemoveDiv);
+    window.document.getElementById('blipshot-img').addEventListener("dragstart", actionDrag);
   }
   
   // ****************************************************************************************** EVENT MANAGER / HALF
@@ -139,5 +143,13 @@
     // Create blob with mime type, create URL for it
     var URL = webkitURL.createObjectURL(builder.getBlob(parts[1]))
     return URL;
+  }
+  
+  function normalizeFileName(string) {
+    out = string;
+    //out = out.replace(/"/, '\''); // To avoid collision with DOM attribute
+    //out = out.replace(/\/\?<>\\:\*\|/, '-'); // Windows safe
+    out = out.replace(/[^a-zA-Z0-9_\-+,;'!?$£@&%()\[\]=]/g, " ").replace(/ +/g, " "); // Hard replace
+    return out;
   }
 })();
