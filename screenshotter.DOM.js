@@ -46,7 +46,7 @@
   }
   
   // 2
-  function screenshotVisibleArea(shared) { chrome.extension.sendRequest({ action: 'screenshotVisibleArea', shared: shared }); }
+  function screenshotVisibleArea(shared) { chrome.extension.sendMessage({ action: 'screenshotVisibleArea', shared: shared }); }
   
   // 3
   function screenshotScroll(shared) {
@@ -67,7 +67,7 @@
   }
   
   // 4
-  function screenshotEnd(shared) { chrome.extension.sendRequest({ action: 'screenshotEnd', shared: shared }); }
+  function screenshotEnd(shared) { chrome.extension.sendMessage({ action: 'screenshotEnd', shared: shared }); }
   
   // 5
   function screenshotReturn(shared) {
@@ -108,7 +108,7 @@
      * It's initialized right after declaration.
      */
     var self = this;
-    chrome.extension.onRequest.addListener(function(e) {
+    chrome.extension.onMessage.addListener(function(e) {
         switch (e.action) {
           case "screenshotBegin": screenshotBegin(e.shared); break;
           case "screenshotScroll": screenshotScroll(e.shared); break;

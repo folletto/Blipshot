@@ -1,7 +1,14 @@
 {
+  "manifest_version": 2,
+
+
+  // ********************************************************************** Extensions Details
   "name": "Blipshot — one click screenshots",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Real fast and simple one-click full-page screenshots with drag and drop.",
+
+
+  // ********************************************************************** Visual
   "browser_action": {
     "default_icon": "icon/toolbar.png"
   },
@@ -11,10 +18,15 @@
     "48": "icon/icon48.png",
     "128": "icon/icon128.png"
   },
+
+
+  // ********************************************************************** Permissions
+  "background": {
+    "scripts": ["screenshotter.js", "actions.js"]
+  },
   "content_scripts": [ 
     { "js": [ "screenshotter.DOM.js" ], "matches": [ "http://*/*", "https://*/*" ], "run_at": "document_end" }
   ],
-  "background_page": "background.html",
   "permissions": [
     "tabs",
     "http://*/*",

@@ -8,7 +8,7 @@
       chrome.browserAction.setBadgeBackgroundColor({ color: [255, 0, 0, 255] });
       chrome.browserAction.setBadgeText({ text: "grab" });
       
-      chrome.extension.sendRequest({ action: 'grab' });
+      chrome.extension.sendMessage({ action: 'grab' });
     }
 
     function doReset() {

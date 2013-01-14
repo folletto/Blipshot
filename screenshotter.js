@@ -92,7 +92,7 @@ var Screenshotter = {
   },
   
   // 1
-  screenshotBegin: function(shared) { chrome.tabs.sendRequest(this.shared.tab.id, { action: 'screenshotBegin', shared: shared }); },
+  screenshotBegin: function(shared) { chrome.tabs.sendMessage(this.shared.tab.id, { action: 'screenshotBegin', shared: shared }); },
   
   // 2
   screenshotVisibleArea: function(shared) {
@@ -104,7 +104,7 @@ var Screenshotter = {
   },
   
   // 3
-  screenshotScroll: function(shared) { chrome.tabs.sendRequest(this.shared.tab.id, { action: 'screenshotScroll', shared: shared }); },
+  screenshotScroll: function(shared) { chrome.tabs.sendMessage(this.shared.tab.id, { action: 'screenshotScroll', shared: shared }); },
   
   // 4
   screenshotEnd: function(shared) {
@@ -120,7 +120,7 @@ var Screenshotter = {
   // 5
   screenshotReturn: function(shared) {
     UI.status('green', "done", 3000);
-    chrome.tabs.sendRequest(this.shared.tab.id, { action: 'screenshotReturn', shared: shared });
+    chrome.tabs.sendMessage(this.shared.tab.id, { action: 'screenshotReturn', shared: shared });
   },
   
   // ****************************************************************************************** EVENT MANAGER / HALF
@@ -130,7 +130,7 @@ var Screenshotter = {
      * It's initialized at the end of this file.
      */
     var self = this;
-    chrome.extension.onRequest.addListener(function(e) {
+    chrome.extension.onMessage.addListener(function(e) {
         switch (e.action) {
           case "grab": self.grab(); break;
           case "screenshotVisibleArea": self.screenshotVisibleArea(e.shared); break;

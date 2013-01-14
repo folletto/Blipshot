@@ -14,7 +14,12 @@ var UI = {
     }
     chrome.browserAction.setBadgeText({ text: text });
     
-    if (timed > 0) setTimeout('chrome.browserAction.setBadgeText({ text: "" });', timed);
+    // *** Triggered if the message will be shown just for a short amout of time (specified)
+    if (timed > 0) {
+      setTimeout(function() {
+        chrome.browserAction.setBadgeText({ text: "" });
+      }, timed);
+    }
   }
 }
 
@@ -23,5 +28,5 @@ chrome.browserAction.onClicked.addListener(function(tab) {
   UI.status('red', "grab");
   
   Screenshotter.grab();
-  //chrome.extension.sendRequest({ action: 'grab' });
+  //chrome.extension.sendMessage({ action: 'grab' });
 });
