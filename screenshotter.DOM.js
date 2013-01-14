@@ -136,12 +136,11 @@
     var view = new Uint8Array(buf);
     for(var i = 0; i < view.length; i++)
       view[i] = binStr.charCodeAt(i);
-    
-    var builder = new WebKitBlobBuilder();
-    builder.append(buf);
-    
+
     // Create blob with mime type, create URL for it
-    var URL = webkitURL.createObjectURL(builder.getBlob(parts[1]))
+    var blob = new Blob([view], {'type': parts[1]});
+    var URL = webkitURL.createObjectURL(blob)
+    
     return URL;
   }
   
