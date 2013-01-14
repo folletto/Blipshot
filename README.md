@@ -48,6 +48,10 @@ MAY DO
 CHANGELOG
 ---------
 
+* **1.0.5** (14/01/2013)
+  * Fixed: WebKitBlobBuilder was deprecated, using Blob instead. Thanks to @ble for the code snippet.
+  * Updated: Manifest V2.
+
 * **1.0.4** (20/02/2012)
   * Fixed: re-introduced page names and timestamp on file names.
 
