@@ -3,8 +3,9 @@
 
 
   "name": "Blipshot — one click screenshots",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Real fast and simple one-click full-page screenshots with drag and drop.",
+  "author": "Davide Casali",
 
 
   "browser_action": {
@@ -22,11 +23,10 @@
     "scripts": ["screenshotter.js", "actions.js"]
   },
   "content_scripts": [ 
-    { "js": [ "screenshotter.DOM.js" ], "matches": [ "http://*/*", "https://*/*" ], "run_at": "document_end" }
+    { "js": [ "screenshotter.DOM.js" ], "matches": [ "<all_urls>" ], "run_at": "document_end" }
   ],
   "permissions": [
     "tabs",
-    "http://*/*",
-    "https://*/*"
+    "<all_urls>"
   ]
 }

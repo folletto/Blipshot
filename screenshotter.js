@@ -98,8 +98,16 @@ var Screenshotter = {
   screenshotVisibleArea: function(shared) {
     var self = this;
     chrome.tabs.captureVisibleTab(null, { format: "png" /* png, jpeg */, quality: 80 }, function(dataUrl) {
-      self.imageDataURLPartial.push(dataUrl);
-      self.screenshotScroll(shared);
+      if (dataUrl) {
+        // Grab successful
+        self.imageDataURLPartial.push(dataUrl);
+        self.screenshotScroll(shared);
+      } else {
+        // Grab failed, warning
+        // To handle issues like permissions - https://github.com/folletto/Blipshot/issues/9
+        alert("\n\n\nI'm sorry.\n\nIt seems Blipshot wasn't able to grab the screenshot of the active tab.\n\nPlease check the extension permissions.\n\nIf the problem persists contact me at \nhttp://github.com/folletto/Blipshot/issues\n\n\n");
+        return false;
+      }
     });
   },
   
