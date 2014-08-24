@@ -86,6 +86,7 @@ var Screenshotter = {
         }
         
         // ****** Begin!
+        chrome.tabs.sendMessage(self.shared.tab.id, { action: 'blanketStyleSet', property: 'position', from: 'fixed', to: 'absolute' });
         self.screenshotBegin(self.shared);
       });
     });
@@ -128,6 +129,7 @@ var Screenshotter = {
   // 5
   screenshotReturn: function(shared) {
     UI.status('green', "done", 3000);
+    chrome.tabs.sendMessage(this.shared.tab.id, { action: 'blanketStyleRestore', property: 'position' });
     chrome.tabs.sendMessage(this.shared.tab.id, { action: 'screenshotReturn', shared: shared });
   },
   
