@@ -30,7 +30,7 @@ KNOWN LIMITATIONS
 
 * Blipshot can't screenshot the Chrome Extensions website (Google policy)
 * Blipshot can't screenshot a page loaded before it was installed (Chrome limitation)
-* Waiting for Google to fix [Bug #45209](http://code.google.com/p/chromium/issues/detail?id=45209): whole tab screenshot
+* Waiting for Google to fix [Bug #45209](http://code.google.com/p/chromium/issues/detail?id=45209) now [Bug #469663](https://code.google.com/p/chromium/issues/detail?id=469663): whole tab screenshot
 * Waiting for Google to fix [Bug #69227](http://code.google.com/p/chromium/issues/detail?id=69227): data URL crashes
 
 
