@@ -110,12 +110,14 @@
      * It's initialized right after declaration.
      */
     var self = this;
-    chrome.extension.onMessage.addListener(function(e) {
-        switch (e.action) {
-          case "screenshotBegin": screenshotBegin(e.shared); break;
-          case "screenshotScroll": screenshotScroll(e.shared); break;
-          case "screenshotReturn": screenshotReturn(e.shared); break;
+    chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+        switch (request.action) {
+          case "screenshotBegin": screenshotBegin(request.shared); break;
+          case "screenshotScroll": screenshotScroll(request.shared); break;
+          case "screenshotReturn": screenshotReturn(request.shared); break;
         }
+
+        sendResponse(true); // this can be checked to verify if the script is loaded (heartbeat)
     });
   }
   eventManagerInit(); // Init
