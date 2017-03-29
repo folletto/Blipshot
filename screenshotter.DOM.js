@@ -91,7 +91,13 @@
       window.webkitURL.revokeObjectURL(blobURL);
     }
     function actionDrag(e) {
-      e.dataTransfer.setData("DownloadURL", "image/png:" + filename + ".png:" + blobURL);
+      if (window.location.protocol === "https:") {
+        // we can't set the name, fall back to the ugly name
+      } else {
+        // Set a nice name
+        e.dataTransfer.setData("DownloadURL", "image/png:" + filename + ".png:" + blobURL);
+        //e.dataTransfer.setData("DownloadURL", "text/plain:feh.txt:data:feadhsahdsha");
+      }
     }
     window.document.getElementById('blipshot-dim').addEventListener("click", actionRemoveDiv);
     window.document.getElementById('blipshot-img').addEventListener("dragstart", actionDrag);
