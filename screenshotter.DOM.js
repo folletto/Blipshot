@@ -79,11 +79,7 @@
     var blobURL = dataToBlobURL(shared.imageDataURL);
 
     // ****** Add DOM Elements to Page
-    var div = window.document.createElement('div');
-    div.id = "blipshot";
-    div.innerHTML = '<div id="blipshot-dim" style="position: absolute !important; height: ' + window.document.body.scrollHeight + 'px !important; width: 100% !important; top: 0px !important; left: 0px !important; background: #000000 !important; opacity: 0.66 !important; z-index: 666666 !important;"> </div>';
-    div.innerHTML += '<p style="-webkit-box-shadow: 0px 5px 10px #000000; margin: 20px; background: #ffffff; position: absolute; top: 0; right: 0; z-index: 666667 !important;"><img id="blipshot-img" alt="' + filename + '" src="' +  blobURL + '" width= "400" /></p>';
-    window.document.body.appendChild(div);
+    renderScreenshotOverlay(blobURL, filename);
 
     // ****** Add Event Listeners
     function actionRemoveDiv() {
@@ -119,6 +115,15 @@
   eventManagerInit(); // Init
 
   // ****************************************************************************************** SUPPORT
+  function renderScreenshotOverlay(blobURL, filename) {
+    // ****** Add DOM Elements to Page
+    var div = window.document.createElement('div');
+    div.id = "blipshot";
+    div.innerHTML = '<div id="blipshot-dim" style="position: absolute !important; height: ' + window.document.body.scrollHeight + 'px !important; width: 100% !important; top: 0px !important; left: 0px !important; background: #000000 !important; opacity: 0.66 !important; z-index: 666666 !important;"> </div>';
+    div.innerHTML += '<a download="' + filename + '" href="' +  blobURL + '"  style="-webkit-box-shadow: 0px 5px 10px #000000; margin: 20px; background: #ffffff; position: absolute; top: 0; right: 0; z-index: 666667 !important;"><img id="blipshot-img" alt="' + filename + '" src="' +  blobURL + '" width= "400" /></a>';
+    window.document.body.appendChild(div);
+  }
+
   function dataToBlobURL(dataURL) {
     /****************************************************************************************************
      * Converts a data:// URL (i.e. `canvas.toDataURL("image/png")`) to a blob:// URL.
@@ -139,9 +144,9 @@
 
     // Create blob with mime type, create URL for it
     var blob = new Blob([view], {'type': parts[1]});
-    var URL = webkitURL.createObjectURL(blob)
+    var objectURL = webkitURL.createObjectURL(blob)
 
-    return URL;
+    return objectURL;
   }
 
   function normalizeFileName(string) {
