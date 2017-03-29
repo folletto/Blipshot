@@ -52,7 +52,7 @@ CHANGELOG
 ---------
 
 * **1.1.1** (24/08/2014)
-  * Updated icons. 
+  * Updated icons.
 
 * **1.1.0** (24/08/2014)
   * Fixed: Added code to workaround pages with `fixed` elements. This should allow screenshotting a number of pages with fixed elements (some will still have repeating elements). This has been built as a reusable library (blankedStyleSet.js). Thanks @guille.

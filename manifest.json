@@ -25,7 +25,7 @@
   "background": {
     "scripts": ["screenshotter.js", "actions.js"]
   },
-  "content_scripts": [ 
+  "content_scripts": [
     { "js": [ "screenshotter.DOM.js", "blanketStyleSet.js" ], "matches": [ "<all_urls>" ], "run_at": "document_end" }
   ],
   "permissions": [
