@@ -136,7 +136,7 @@ var Screenshotter = {
 
   // 5
   screenshotReturn: function(shared) {
-    UI.status('green', "done", 3000);
+    UI.status('green', "✓", 3000);
     chrome.tabs.sendMessage(this.shared.tab.id, { action: 'blanketStyleRestore', property: 'position' });
     chrome.tabs.sendMessage(this.shared.tab.id, { action: 'screenshotReturn', shared: shared });
   },
