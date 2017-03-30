@@ -2,8 +2,9 @@
   "manifest_version": 2,
 
 
-  "name": "Blipshot — one click screenshots",
-  "version": "1.1.1",
+  "name": "Blipshot: one click full page screenshots",
+  "short_name": "Blipshot",
+  "version": "1.2",
   "description": "Real fast and simple one-click full-page screenshots with drag and drop.",
   "author": "Davide Casali",
 

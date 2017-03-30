@@ -51,6 +51,14 @@ MAY DO
 CHANGELOG
 ---------
 
+* **1.2** (30/03/2017)
+  * Implemented click to download instantly.
+  * Added check if the script is loaded.
+  * Workaround for Chrome blocking drag'n'drop on HTTPS sites (not ideal, no nice name).
+  * Increased filenames "precision" by adding seconds to the name.
+  * Moved HTML to separate template.
+  * Slight visual tweaking.
+
 * **1.1.1** (24/08/2014)
   * Updated icons.
 
