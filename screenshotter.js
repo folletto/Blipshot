@@ -89,7 +89,7 @@ var Screenshotter = {
         chrome.tabs.sendMessage(self.shared.tab.id, { action: 'heartbeat' }, function(response) {
           if (!response) {
             UI.status('red', "!", 1000);
-            alert("\n\n\nPlease reload the page to load Blipshot.\n\nIf the problem persists contact me at \nhttp://github.com/folletto/Blipshot/issues\n\n\n");
+            alert("\n\n\nPlease reload the page to use Blipshot.\n\nIf the problem persists contact me at \nhttp://github.com/folletto/Blipshot/issues\n\n\n");
           }
         });
 
