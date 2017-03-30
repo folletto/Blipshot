@@ -25,10 +25,15 @@
   transform: translate3d(0, 0, 2px) !important;
   box-shadow: 0px 7px 10px #000000, 0 0 0 2px #000000 !important;
 }
+
+#chrome-extension__blipshot-img {
+  max-width: 400px !important;
+  width: 400px !important;
+}
 </style>
 
 <div id="chrome-extension__blipshot-dim"> </div>
 
 <a id="chrome-extension__blipshot-a" download="{filename}" href="{blobURL}">
-  <img id="chrome-extension__blipshot-img" alt="{filename}" src="{blobURL}" width="400" />
+  <img id="chrome-extension__blipshot-img" alt="{filename}" src="{blobURL}" />
 </a>
