@@ -91,7 +91,7 @@
         if (div) div.parentElement.removeChild(div);
 
         // Cleanup
-        window.webkitURL.revokeObjectURL(blobURL);
+        window.URL.revokeObjectURL(blobURL);
       }
       function actionDragFile(e) {
         if (window.location.protocol === "https:") {
@@ -194,7 +194,7 @@
 
     // Create blob with mime type, create URL for it
     var blob = new Blob([view], {'type': parts[1]});
-    var objectURL = webkitURL.createObjectURL(blob)
+    var objectURL = window.URL.createObjectURL(blob)
 
     return objectURL;
   }
