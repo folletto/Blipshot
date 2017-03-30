@@ -47,12 +47,6 @@
  *
  */
 
-
-
-getEventListeners(document)["scroll"].forEach(
-      function(o) { o.remove(); }
-)
-
 (function() {
 
   var reverse = []; // Store the nodes to restore for each changed property (2-levels array)
@@ -78,6 +72,9 @@ getEventListeners(document)["scroll"].forEach(
      */
     reverse[node] = reverse[node] || [];
     reverse[node][type] = reverse[node][type] || [];
+
+    if (node === 'window') node = window;
+    if (node === 'document') node = document;
 
     getEventListeners(node)[type].forEach(
       function(listenerObject) {
