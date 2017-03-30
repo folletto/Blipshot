@@ -34,6 +34,7 @@
 (function() {
 
   var shared = {};
+  var templates = {};
 
   // ****************************************************************************************** SCREENSHOT SEQUENCE
 
@@ -79,28 +80,31 @@
     var blobURL = dataToBlobURL(shared.imageDataURL);
 
     // ****** Add DOM Elements to Page
-    renderScreenshotOverlay(blobURL, filename);
+    renderTemplate("overlay", {
+      blobURL: blobURL,
+      filename: filename,
+      pageHeight: window.document.body.scrollHeight,
+    }, function(div) {
+      // ****** Add Event Listeners
+      function actionRemoveDiv() {
+        // Closes the extension overlays.
+        if (div) div.parentElement.removeChild(div);
 
-    // ****** Add Event Listeners
-    function actionRemoveDiv() {
-      // Closes the extension overlays.
-      var blipshotdiv = window.document.getElementById('blipshot');
-      if (blipshotdiv) blipshotdiv.parentElement.removeChild(blipshotdiv);
-
-      // Cleanup
-      window.webkitURL.revokeObjectURL(blobURL);
-    }
-    function actionDrag(e) {
-      if (window.location.protocol === "https:") {
-        // we can't set the name, fall back to the ugly name
-      } else {
-        // Set a nice name
-        e.dataTransfer.setData("DownloadURL", "image/png:" + filename + ".png:" + blobURL);
-        //e.dataTransfer.setData("DownloadURL", "text/plain:feh.txt:data:feadhsahdsha");
+        // Cleanup
+        window.webkitURL.revokeObjectURL(blobURL);
       }
-    }
-    window.document.getElementById('blipshot-dim').addEventListener("click", actionRemoveDiv);
-    window.document.getElementById('blipshot-img').addEventListener("dragstart", actionDrag);
+      function actionDragFile(e) {
+        if (window.location.protocol === "https:") {
+          // we can't set the name, fall back to the ugly name
+        } else {
+          // Set a nice name
+          e.dataTransfer.setData("DownloadURL", "image/png:" + filename + ".png:" + blobURL);
+          //e.dataTransfer.setData("DownloadURL", "text/plain:feh.txt:data:feadhsahdsha");
+        }
+      }
+      window.document.getElementById('chrome-extension__blipshot-dim').addEventListener("click", actionRemoveDiv);
+      window.document.getElementById('chrome-extension__blipshot-img').addEventListener("dragstart", actionDragFile);
+    });
   }
 
   // ****************************************************************************************** EVENT MANAGER / HALF
@@ -123,13 +127,51 @@
   eventManagerInit(); // Init
 
   // ****************************************************************************************** SUPPORT
-  function renderScreenshotOverlay(blobURL, filename) {
+  function renderScreenshotOverlay(blobURL, filename, callback) {
     // ****** Add DOM Elements to Page
+    renderTemplate("overlay", {
+      blobURL: blobURL,
+      filename: filename,
+      pageHeight: window.document.body.scrollHeight,
+    }, callback);
+  }
+
+  function renderTemplate(name, data, callback) {
+    /****************************************************************************************************
+     * Loads the template and rendes it on the DOM.
+     */
+    var name = name || "template";
+
+    if (!templates[name]) {
+      // Load, cache and use
+      var xhr = new XMLHttpRequest();
+      xhr.addEventListener("load", function() {
+        templates[name] = this.responseText;
+        appendTemplate(templates[name], data, callback);
+      });
+      xhr.open("GET", chrome.runtime.getURL("resources/" + name + ".html"));
+      xhr.send();
+    } else {
+      // Use cached
+      appendTemplate(templates[name], data, callback);
+    }
+  }
+
+  function appendTemplate(templateString, data, callback) {
+    /****************************************************************************************************
+     * Replaces the variables in the template and appends them to the DOM.
+     */
+    var templatePrepared = templateString;
+
+    for(var key in data) {
+      templatePrepared = templatePrepared.replace(new RegExp("{" + key + "}", "g"), data[key]);
+    }
+
     var div = window.document.createElement('div');
-    div.id = "blipshot";
-    div.innerHTML = '<div id="blipshot-dim" style="position: absolute !important; height: ' + window.document.body.scrollHeight + 'px !important; width: 100% !important; top: 0px !important; left: 0px !important; background: #000000 !important; opacity: 0.66 !important; z-index: 666666 !important;"> </div>';
-    div.innerHTML += '<a download="' + filename + '" href="' +  blobURL + '"  style="-webkit-box-shadow: 0px 5px 10px #000000; margin: 20px; background: #ffffff; position: absolute; top: 0; right: 0; z-index: 666667 !important;"><img id="blipshot-img" alt="' + filename + '" src="' +  blobURL + '" width= "400" /></a>';
+    div.innerHTML = templatePrepared;
     window.document.body.appendChild(div);
+
+    callback(div);
   }
 
   function dataToBlobURL(dataURL) {

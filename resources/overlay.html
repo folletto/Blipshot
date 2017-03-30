@@ -1,0 +1,34 @@
+<style>
+#chrome-extension__blipshot-dim {
+  z-index: 666666 !important;
+  position: absolute !important;
+  width: 100% !important;
+  top: 0px !important;
+  left: 0px !important;
+  background: #000000 !important;
+  opacity: 0.66 !important;
+  height: {pageHeight}px !important;
+}
+
+#chrome-extension__blipshot-a {
+  z-index: 666667 !important;
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  box-shadow: 0px 5px 10px #000000 !important;
+  margin: 20px !important;
+  background: #ffffff !important;
+  transition: all 200ms ease-in-out !important;
+}
+
+#chrome-extension__blipshot-a:hover {
+  transform: translate3d(0, 0, 2px) !important;
+  box-shadow: 0px 7px 10px #000000, 0 0 0 2px #000000 !important;
+}
+</style>
+
+<div id="chrome-extension__blipshot-dim"> </div>
+
+<a id="chrome-extension__blipshot-a" download="{filename}" href="{blobURL}">
+  <img id="chrome-extension__blipshot-img" alt="{filename}" src="{blobURL}" width="400" />
+</a>

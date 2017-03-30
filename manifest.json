@@ -31,5 +31,8 @@
   "permissions": [
     "tabs",
     "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    "resources/overlay.html"
   ]
 }
