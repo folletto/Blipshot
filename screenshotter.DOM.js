@@ -58,7 +58,8 @@
 
     if (window.document.body.scrollTop == scrollTopCurrent) {
       // END ||
-      shared.imageDirtyCutAt = scrollTopCurrent % window.document.documentElement.clientHeight;
+      shared.imageDirtyCutAt = scrollTopCurrent % window.innerHeight;
+      //console.log(scrollTopCurrent + " % " + window.innerHeight + " = " + shared.imageDirtyCutAt);
       window.document.body.scrollTop = shared.originalScrollTop; // <-[] restore user scrollTop
       screenshotEnd(shared);
     } else {
