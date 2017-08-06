@@ -187,8 +187,10 @@ var Screenshotter = {
 
             var height = images[j].height - cut;
             var width = images[j].width;
-            //alert("[i:" + i + ", j:" + j + "]" + width + "x" + height + "(cut:" + cut + ") --- images:" + imageDataURLs.length);
 
+            // void canvas.getContext("2d").drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+            //console.log("[i:" + i + ", j:" + j + "] --- total images:" + imageDataURLs.length);
+            //console.log("--> drawImage(images[" + j + "], sx:0, sy/cut:" + cut + ", swidth:" + width + ", sheight:" + height + ", dx:0, dy:" + (j * images[0].height) + ", dwidth:" + width + ", dheight:" + height + ");");
             canvas.getContext("2d").drawImage(images[j], 0, cut, width, height, 0, j * images[0].height, width, height);
           }
 
