@@ -74,7 +74,8 @@ var Screenshotter = {
 
     // ****** Get tab data
     chrome.windows.getCurrent(function(win) {
-      chrome.tabs.getSelected(win.id, function(tab) {
+      chrome.tabs.query({ active: true, windowId: win.id }, function(tabs) {
+        var tab = tabs[0];
         self.shared.tab = tab;
 
         // ****** Check if everything's is in order.
