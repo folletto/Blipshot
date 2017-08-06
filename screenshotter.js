@@ -36,7 +36,6 @@ var Screenshotter = {
   imageDataURL: [],
 
   shared: {
-    imageDataURLPartial: [],
     imageDirtyCutAt: 0,
     imageDataURL: 0,
 
