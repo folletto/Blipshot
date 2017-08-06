@@ -40,6 +40,10 @@
 
   // 1
   function screenshotBegin(shared) {
+    if (window.document.body.scrollHeight > 32766) {
+      alert("\n\n\nDue to Chrome canvas memory limits, the screenshot will be limited to 32766px height.\n\n\n");
+    }
+
     shared.originalScrollTop = window.document.body.scrollTop; // ->[] save user scrollTop
     shared.tab.hasVscrollbar = (window.innerHeight < window.document.body.scrollHeight);
     window.document.body.scrollTop = 0;
