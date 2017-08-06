@@ -80,32 +80,38 @@
     var filename = "pageshot of '" + normalizeFileName(shared.tab.title) + "' @ " + timestamp;
     var blobURL = dataToBlobURL(shared.imageDataURL);
 
-    // ****** Add DOM Elements to Page
-    renderTemplate("overlay", {
-      blobURL: blobURL,
-      filename: filename,
-      pageHeight: window.document.body.scrollHeight,
-    }, function(div) {
-      // ****** Add Event Listeners
-      function actionRemoveDiv() {
-        // Closes the extension overlays.
-        if (div) div.parentElement.removeChild(div);
+    if (blobURL) {
+      // ****** Add DOM Elements to Page
+      renderTemplate("overlay", {
+        blobURL: blobURL,
+        filename: filename,
+        pageHeight: window.document.body.scrollHeight,
+      }, function(div) {
+        // ****** Add Event Listeners
+        function actionRemoveDiv() {
+          // Closes the extension overlays.
+          if (div) div.parentElement.removeChild(div);
 
-        // Cleanup
-        window.URL.revokeObjectURL(blobURL);
-      }
-      function actionDragFile(e) {
-        if (window.location.protocol === "https:") {
-          // we can't set the name, fall back to the ugly name
-        } else {
-          // Set a nice name
-          e.dataTransfer.setData("DownloadURL", "image/png:" + filename + ".png:" + blobURL);
-          //e.dataTransfer.setData("DownloadURL", "text/plain:feh.txt:data:feadhsahdsha");
+          // Cleanup
+          window.URL.revokeObjectURL(blobURL);
         }
-      }
-      window.document.getElementById('chrome-extension__blipshot-dim').addEventListener("click", actionRemoveDiv);
-      window.document.getElementById('chrome-extension__blipshot-img').addEventListener("dragstart", actionDragFile);
-    });
+        function actionDragFile(e) {
+          if (window.location.protocol === "https:") {
+            // we can't set the name, fall back to the ugly name
+          } else {
+            // Set a nice name
+            e.dataTransfer.setData("DownloadURL", "image/png:" + filename + ".png:" + blobURL);
+            //e.dataTransfer.setData("DownloadURL", "text/plain:feh.txt:data:feadhsahdsha");
+          }
+        }
+        window.document.getElementById('chrome-extension__blipshot-dim').addEventListener("click", actionRemoveDiv);
+        window.document.getElementById('chrome-extension__blipshot-img').addEventListener("dragstart", actionDragFile);
+      });
+    } else {
+      // ****** No content! Maybe page too long?
+      alert("\n\n\nI'm sorry.\n\nThere was some trouble in generating the screenshot.\n\nIt might be due to Chrome canvas size limitations.\nTry on a shorter page?\n\n\n");
+    }
+
   }
 
   // ****************************************************************************************** EVENT MANAGER / HALF
@@ -184,20 +190,24 @@
      */
     var parts = dataURL.match(/data:([^;]*)(;base64)?,([0-9A-Za-z+/]+)/);
 
-    // Assume base64 encoding
-    var binStr = atob(parts[3]);
+    if (parts && parts.length >= 3) {
+      // Assume base64 encoding
+      var binStr = atob(parts[3]);
 
-    // Convert to binary in ArrayBuffer
-    var buf = new ArrayBuffer(binStr.length);
-    var view = new Uint8Array(buf);
-    for(var i = 0; i < view.length; i++)
-      view[i] = binStr.charCodeAt(i);
+      // Convert to binary in ArrayBuffer
+      var buf = new ArrayBuffer(binStr.length);
+      var view = new Uint8Array(buf);
+      for(var i = 0; i < view.length; i++)
+        view[i] = binStr.charCodeAt(i);
 
-    // Create blob with mime type, create URL for it
-    var blob = new Blob([view], {'type': parts[1]});
-    var objectURL = window.URL.createObjectURL(blob)
+      // Create blob with mime type, create URL for it
+      var blob = new Blob([view], {'type': parts[1]});
+      var objectURL = window.URL.createObjectURL(blob)
 
-    return objectURL;
+      return objectURL;
+    } else {
+      return null;
+    }
   }
 
   function normalizeFileName(string) {
