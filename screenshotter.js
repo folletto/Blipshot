@@ -180,6 +180,11 @@ var Screenshotter = {
           if (images.length > 1) canvas.height = (imageDataURLs.length - 1) * images[0].height + imageDirtyCutAt;
           else canvas.height = images[0].height;
 
+          // Ouch: Skia / Chromium limitation
+          // https://bugs.chromium.org/p/chromium/issues/detail?id=339725
+          // https://bugs.chromium.org/p/skia/issues/detail?id=2122
+          if (canvas.height > 32766) canvas.height = 32766;
+
           // ****** Stitch
           for (var j = 0; j < images.length; j++) {
             var cut = 0;

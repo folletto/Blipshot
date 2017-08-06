@@ -56,7 +56,7 @@
     //TODO: bug: doesn't screenshot correctly
     window.document.body.scrollTop += window.innerHeight; // scroll!
 
-    if (window.document.body.scrollTop == scrollTopCurrent) {
+    if (window.document.body.scrollTop == scrollTopCurrent || window.document.body.scrollTop > 32766) { // 32766 --> Skia / Chrome Canvas Limitation, see recursiveImageMerge()
       // END ||
       shared.imageDirtyCutAt = scrollTopCurrent % window.innerHeight;
       //console.log(scrollTopCurrent + " % " + window.innerHeight + " = " + shared.imageDirtyCutAt);
