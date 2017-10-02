@@ -40,13 +40,16 @@
 
   // 1
   function screenshotBegin(shared) {
-    if (window.document.body.scrollHeight > 32766) {
+    // Identify which part of the DOM is "scrolling", and store the previous position
+    var scrollNode = document.scrollingElement || document.documentElement;
+
+    if (scrollNode.scrollHeight > 32766) {
       alert("\n\n\nDue to Chrome canvas memory limits, the screenshot will be limited to 32766px height.\n\n\n");
     }
 
-    shared.originalScrollTop = window.document.body.scrollTop; // ->[] save user scrollTop
-    shared.tab.hasVscrollbar = (window.innerHeight < window.document.body.scrollHeight);
-    window.document.body.scrollTop = 0;
+    shared.originalScrollTop = scrollNode.scrollTop; // ->[] save user scrollTop
+    shared.tab.hasVscrollbar = (window.innerHeight < scrollNode.scrollHeight);
+    scrollNode.scrollTop = 0;
     setTimeout(function() { screenshotVisibleArea(shared); }, 100);
   }
 
@@ -55,19 +58,22 @@
 
   // 3
   function screenshotScroll(shared) {
-    var scrollTopCurrent = window.document.body.scrollTop;
+    // Identify which part of the DOM is "scrolling", and store the previous position
+    var scrollNode = document.scrollingElement || document.documentElement;
+    var scrollTopBeforeScrolling = scrollNode.scrollTop;
 
-    //TODO: bug: doesn't screenshot correctly
-    window.document.body.scrollTop += window.innerHeight; // scroll!
+    // Scroll down!
+    scrollNode.scrollTop += window.innerHeight;
 
-    if (window.document.body.scrollTop == scrollTopCurrent || window.document.body.scrollTop > 32766) { // 32766 --> Skia / Chrome Canvas Limitation, see recursiveImageMerge()
+    if (scrollNode.scrollTop == scrollTopBeforeScrolling || scrollNode.scrollTop > 32766) { // 32766 --> Skia / Chrome Canvas Limitation, see recursiveImageMerge()
       // END ||
-      shared.imageDirtyCutAt = scrollTopCurrent % window.innerHeight;
-      //console.log(scrollTopCurrent + " % " + window.innerHeight + " = " + shared.imageDirtyCutAt);
-      window.document.body.scrollTop = shared.originalScrollTop; // <-[] restore user scrollTop
+      shared.imageDirtyCutAt = scrollTopBeforeScrolling % window.innerHeight;
+      scrollNode.scrollTop = shared.originalScrollTop; // <-[] restore user scrollTop
       screenshotEnd(shared);
     } else {
       // LOOP >>
+      // This bounces to the screenshot call before coming back in this function.
+      // The delay is due to some weird race conditions.
       setTimeout(function() { screenshotVisibleArea(shared); }, 100);
     }
   }
