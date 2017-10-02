@@ -51,6 +51,9 @@ MAY DO
 CHANGELOG
 ---------
 
+* **1.2.1** (02/10/2017)
+  * Fixed scrolling due to change in API behaviour in Chrome 61 (`scrollingElement`), see #17.
+
 * **1.2.1** (06/08/2017)
   * Limit height to 32766px due to [Chromium](https://bugs.chromium.org/p/chromium/issues/detail?id=339725)/[Skia](https://bugs.chromium.org/p/skia/issues/detail?id=2122) own limitations.
   * Show error message if image generated has issues.
