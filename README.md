@@ -51,7 +51,10 @@ MAY DO
 CHANGELOG
 ---------
 
-* **1.2.1** (02/10/2017)
+* **1.2.3** (29/08/2018)
+  * Fixed "day" in file name (was: weekday) #19.
+
+* **1.2.2** (02/10/2017)
   * Fixed scrolling due to change in API behaviour in Chrome 61 (`scrollingElement`), see #17.
 
 * **1.2.1** (06/08/2017)
