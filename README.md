@@ -51,6 +51,10 @@ MAY DO
 CHANGELOG
 ---------
 
+* **1.2.4** (08/08/2021)
+  * Fixed Chrome 92 issue #25 by introducing throttling. Capturing is now slower. Thanks Chrome.
+  * Fixed position:fixed not being reset to avoid repetitions
+
 * **1.2.3** (29/08/2018)
   * Fixed "day" in file name (was: weekday) #19.
 
