@@ -36,6 +36,8 @@
   var shared = {};
   var templates = {};
 
+  const SCROLL_DELAY = 500; // The delay is due to: https://github.com/folletto/Blipshot/issues/25
+
   // ****************************************************************************************** SCREENSHOT SEQUENCE
 
   // 1
@@ -44,7 +46,7 @@
     var scrollNode = document.scrollingElement || document.documentElement;
 
     if (scrollNode.scrollHeight > 32766) {
-      alert("\n\n\nDue to Chrome canvas memory limits, the screenshot will be limited to 32766px height.\n\n\n");
+      alert("Due to Chrome canvas memory limits, the screenshot will be limited to 32766px height.\n\n");
     }
 
     shared.originalScrollTop = scrollNode.scrollTop; // ->[] save user scrollTop
@@ -73,8 +75,7 @@
     } else {
       // LOOP >>
       // This bounces to the screenshot call before coming back in this function.
-      // The delay is due to some weird race conditions.
-      setTimeout(function() { screenshotVisibleArea(shared); }, 100);
+      setTimeout(function() { screenshotVisibleArea(shared); }, SCROLL_DELAY);
     }
   }
 
@@ -119,7 +120,7 @@
       });
     } else {
       // ****** No content! Maybe page too long?
-      alert("\n\n\nI'm sorry.\n\nThere was some trouble in generating the screenshot.\n\nIt might be due to Chrome canvas size limitations.\nTry on a shorter page?\n\n\n");
+      alert("I'm sorry.\n\nThere was some trouble in generating the screenshot.\n\nIt might be due to Chrome canvas size limitations.\nTry on a shorter page?\n\n");
     }
 
   }

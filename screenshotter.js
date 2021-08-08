@@ -81,7 +81,7 @@ var Screenshotter = {
         // ****** Check if everything's is in order.
         var parts = tab.url.match(/https?:\/\/chrome.google.com\/?.*/);
         if (parts !== null) {
-          alert("\n\n\nI'm sorry.\n\nDue to security restrictions \non the Google Chrome Store, \nBlipshot can't run here.\n\nTry on any other page. ;)\n\n\n");
+          alert("I'm sorry.\n\nDue to security restrictions \non the Google Chrome Store, \nBlipshot can't run here.\n\nTry on any other page. ;)\n\n");
           return false;
         }
 
@@ -89,7 +89,7 @@ var Screenshotter = {
         chrome.tabs.sendMessage(self.shared.tab.id, { action: 'heartbeat' }, function(response) {
           if (!response) {
             UI.status('red', "!", 1000);
-            alert("\n\n\nPlease reload the page to use Blipshot.\n\nIf the problem persists contact me at \nhttp://github.com/folletto/Blipshot/issues\n\n\n");
+            alert("Please reload the page to use Blipshot.\n\nIf the problem persists contact me at \nhttp://github.com/folletto/Blipshot/issues\n\n");
           }
         });
 
@@ -114,7 +114,7 @@ var Screenshotter = {
       } else {
         // Grab failed, warning
         // To handle issues like permissions - https://github.com/folletto/Blipshot/issues/9
-        alert("\n\n\nI'm sorry.\n\nIt seems Blipshot wasn't able to grab the screenshot of the active tab.\n\nPlease check the extension permissions.\n\nIf the problem persists contact me at \nhttp://github.com/folletto/Blipshot/issues\n\n\n");
+        alert("I'm sorry.\n\nIt seems Blipshot wasn't able to grab the screenshot of the active tab.\n\nPlease check the extension permissions.\n\nIf the problem persists contact me at \nhttp://github.com/folletto/Blipshot/issues\n\nError: " + chrome.runtime.lastError.message + "\n\n");
         return false;
       }
     });
