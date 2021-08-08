@@ -97,7 +97,7 @@ CHANGELOG
 LICENSE
 -------
 
-  _Copyright (C) 2010-2017, Davide Casali_  
+  _Copyright (C) 2010-2021, Erin Casali_  
   _Licensed under **BSD Opensource License** (free for personal and commercial use)_
 
 

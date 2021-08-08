@@ -4,7 +4,7 @@
  *
  *  ==========================================================================================
  *
- *  Copyright (c) 2014, Davide Casali.
+ *  Copyright (c) 2014, Erin Casali.
  *  All rights reserved.
  *
  *  Thanks to Guillermo Rauch.
