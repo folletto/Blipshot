@@ -95,6 +95,7 @@ var Screenshotter = {
 
         // ****** Begin!
         chrome.tabs.sendMessage(self.shared.tab.id, { action: 'blanketStyleSet', property: 'position', from: 'fixed', to: 'absolute' });
+        chrome.tabs.sendMessage(self.shared.tab.id, { action: 'blanketStyleSet', property: 'position', from: 'sticky', to: 'relative' });
         self.screenshotBegin(self.shared);
       });
     });
