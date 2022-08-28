@@ -1,5 +1,6 @@
 ```
 ⚠️ Note: this extension is not under active development anymore.
+See: https://github.com/folletto/Blipshot/issues/28
 ```
 
 Blipshot - Google Chrome Extension
