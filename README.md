@@ -1,3 +1,7 @@
+```
+⚠️ Note: this extension is not under active development anymore.
+```
+
 Blipshot - Google Chrome Extension
 ==================================
 
