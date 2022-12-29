@@ -3,11 +3,16 @@
 See: https://github.com/folletto/Blipshot/issues/28
 ```
 
+```
+⚠️ Note: the extension on the store is from a different owner, originally from this codebase
+Ref: https://chrome.google.com/webstore/detail/mdaboflcmhejfihjcbmdiebgfchigjcf
+```
+
+
 Blipshot - Google Chrome Extension
 ==================================
 
 **Real fast and simple one-click full-page screenshots with support for drag & drop. BSD Licensed.**  
-<https://chrome.google.com/webstore/detail/mdaboflcmhejfihjcbmdiebgfchigjcf>  
 
 
 
